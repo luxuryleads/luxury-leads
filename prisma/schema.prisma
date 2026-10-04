@@ -1,0 +1,110 @@
+// Luxury Leads — Prisma schema
+//
+// Production runs on Postgres (DATABASE_URL). The schema deliberately avoids
+// any Postgres-only column types (no native enums — scores/statuses are plain
+// Strings with documented values, enforced in TypeScript; see
+// src/lib/scoring.ts).
+//
+// LOCAL DEV FALLBACK (SQLite, zero setup): temporarily change the provider
+// below back to "sqlite", set DATABASE_URL="file:./dev.db" in .env, then run
+// `npx prisma generate && npx prisma db push`. Flip it back to "postgresql"
+// before deploying.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Agent {
+  id           String      @id @default(cuid())
+  name         String
+  email        String      @unique
+  passwordHash String
+  brokerage    String?
+  phone        String?
+  createdAt    DateTime    @default(now())
+  openHouses   OpenHouse[]
+  sessions     Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([agentId])
+}
+
+model OpenHouse {
+  id              String   @id @default(cuid())
+  agentId         String
+  agent           Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  propertyAddress String
+  propertyPrice   String?
+  date            DateTime?
+  // Short public slug used in the QR code URL: /capture/[qrSlug]
+  qrSlug          String   @unique
+  createdAt       DateTime @default(now())
+  leads           Lead[]
+
+  @@index([agentId])
+}
+
+model Lead {
+  id          String    @id @default(cuid())
+  openHouseId String
+  openHouse   OpenHouse @relation(fields: [openHouseId], references: [id], onDelete: Cascade)
+  firstName   String
+  lastName    String?
+  email       String?
+  phone       String?
+  // Raw answers from the capture form — the scoring module interprets these.
+  timeline    String // 'lt_30_days' | 'two_six_months' | 'gt_6_months' | 'browsing'
+  preApproved Boolean  @default(false)
+  score       String   // 'HOT' | 'WARM' | 'COLD'
+  // JSON string of human-readable reasons, e.g. ["Timeline under 30 days", ...]
+  scoreReasons String?
+  unsubscribed Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  emailLogs    EmailLog[]
+
+  @@index([openHouseId])
+  @@index([score])
+}
+
+model EmailSequence {
+  id        String    @id @default(cuid())
+  tier      String   // 'HOT' | 'WARM' | 'COLD'
+  dayOffset Int // days after lead capture (0 = send immediately)
+  subject   String
+  // Plain text with {{merge_tags}} — see src/lib/email.ts renderEmail()
+  body      String
+  createdAt DateTime  @default(now())
+  emailLogs EmailLog[]
+
+  @@unique([tier, dayOffset])
+  @@index([tier])
+}
+
+model EmailLog {
+  id         String       @id @default(cuid())
+  leadId     String
+  lead       Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  sequenceId String
+  sequence   EmailSequence @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+  status     String   @default("PENDING") // 'PENDING' | 'SENT' | 'FAILED' | 'SKIPPED'
+  error      String?
+  sentAt     DateTime?
+  createdAt  DateTime     @default(now())
+
+  @@unique([leadId, sequenceId])
+  @@index([leadId])
+  @@index([status])
+}
