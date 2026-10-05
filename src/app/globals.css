@@ -288,12 +288,12 @@ html { scroll-behavior: smooth; }
 .lp .btn-ghost:hover { border-color: var(--gold); color: var(--gold-strong); }
 .lp .btn-sm { padding: 9px 18px; font-size: 14px; }
 /* ---------- Hero ---------- */
-.lp .hero { padding: 84px 0 96px; }
+.lp .hero { padding: 84px 0 96px; background: transparent; color: var(--text); text-align: left; }
 .lp .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 56px; align-items: center; }
 @media (max-width: 920px) {.lp .hero-grid { grid-template-columns: 1fr; gap: 44px; }}
 .lp .hero h1 { font-size: clamp(42px, 6vw, 66px); letter-spacing: -0.015em; }
 .lp .hero .lede { font-size: 19px; color: var(--muted); margin: 24px 0 32px; max-width: 540px; }
-.lp .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.lp .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
 .lp .hero-assurances { display: flex; gap: 8px 22px; flex-wrap: wrap; margin-top: 26px; color: var(--muted); font-size: 14px; font-weight: 600; }
 .lp .hero-assurances span::before { content: "—"; color: var(--gold); margin-right: 8px; }
 .lp .hero-media { position: relative; }

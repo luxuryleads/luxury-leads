@@ -335,8 +335,8 @@ export default function LandingPage() {
                 </Link>
               </div>
               <img
-                src="/images/hero-home.jpg"
-                alt="A modern luxury home at dusk with warm glowing windows"
+                src="/images/signin-interior.jpg"
+                alt="A sunlit luxury living room with floor-to-ceiling windows, staged for an open house"
                 width="640"
                 height="480"
                 style={{
