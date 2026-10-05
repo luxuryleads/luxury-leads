@@ -1,10 +1,6 @@
 import Link from 'next/link';
 
-const HERO_IMG =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='686' viewBox='0 0 1200 686'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23131519'/%3E%3Cstop offset='0.55' stop-color='%233a3226'/%3E%3Cstop offset='0.82' stop-color='%23a5814a'/%3E%3Cstop offset='1' stop-color='%23e8c87e'/%3E%3C/linearGradient%3E%3ClinearGradient id='win' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe9b0'/%3E%3Cstop offset='1' stop-color='%23e8a94e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='686' fill='url(%23sky)'/%3E%3Ccircle cx='600' cy='540' r='170' fill='%23f5d98a' opacity='0.35'/%3E%3Crect x='380' y='390' width='440' height='210' fill='%2314161b'/%3E%3Cpolygon points='340,400 600,270 860,400' fill='%231b1e24'/%3E%3Crect x='430' y='435' width='85' height='105' rx='6' fill='url(%23win)'/%3E%3Crect x='558' y='435' width='85' height='105' rx='6' fill='url(%23win)'/%3E%3Crect x='686' y='435' width='85' height='105' rx='6' fill='url(%23win)' opacity='0.92'/%3E%3Crect x='578' y='505' width='44' height='95' fill='%230c0e11'/%3E%3Crect y='600' width='1200' height='86' fill='%230f1114'/%3E%3Ccircle cx='150' cy='90' r='2.5' fill='%23ffffff' opacity='0.7'/%3E%3Ccircle cx='1050' cy='130' r='2' fill='%23ffffff' opacity='0.6'/%3E%3Ccircle cx='880' cy='60' r='1.8' fill='%23ffffff' opacity='0.5'/%3E%3C/svg%3E";
 
-const INTERIOR_IMG =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='480' viewBox='0 0 640 480'%3E%3Cdefs%3E%3ClinearGradient id='wall' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f5efe2'/%3E%3Cstop offset='1' stop-color='%23e3d7bc'/%3E%3C/linearGradient%3E%3ClinearGradient id='glass' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23d7e6f2'/%3E%3Cstop offset='1' stop-color='%23b9cfdf'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='640' height='480' fill='url(%23wall)'/%3E%3Crect x='70' y='36' width='500' height='380' fill='%238f6f3a' opacity='0.22'/%3E%3Crect x='80' y='46' width='140' height='360' fill='url(%23glass)'/%3E%3Crect x='232' y='46' width='140' height='360' fill='url(%23glass)'/%3E%3Crect x='384' y='46' width='140' height='360' fill='url(%23glass)'/%3E%3Crect x='80' y='46' width='444' height='10' fill='%236d5527' opacity='0.45'/%3E%3Crect y='416' width='640' height='64' fill='%23cbb98f'/%3E%3Crect x='60' y='330' width='200' height='80' rx='16' fill='%23a5814a'/%3E%3Crect x='60' y='310' width='200' height='34' rx='14' fill='%23b3905c'/%3E%3Ccircle cx='540' cy='360' r='34' fill='%236d7a4f'/%3E%3Crect x='532' y='390' width='16' height='40' fill='%235d5527'/%3E%3C/svg%3E";
 
 function PlanCheck() {
   return (
@@ -100,7 +96,7 @@ export default function LandingPage() {
             </div>
             <div className="hero-media">
               <img
-                src={HERO_IMG}
+                src="/images/hero-home.jpg"
                 alt="A modern luxury home glowing at dusk during an evening open house"
                 width="1200"
                 height="686"
@@ -339,8 +335,8 @@ export default function LandingPage() {
                 </Link>
               </div>
               <img
-                src={INTERIOR_IMG}
-                alt="A sunlit luxury living room with floor-to-ceiling windows, staged for an open house"
+                src="/images/hero-home.jpg"
+                alt="A modern luxury home at dusk with warm glowing windows"
                 width="640"
                 height="480"
                 style={{

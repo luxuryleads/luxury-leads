@@ -197,7 +197,7 @@ html { scroll-behavior: smooth; }
         * { transition: none !important; }
       }
 .lp {
-        color-scheme: light dark;
+        color-scheme: light;
         --bg: #fbfaf7;
         --surface: #ffffff;
         --surface-2: #f3efe7;
@@ -229,26 +229,6 @@ html { scroll-behavior: smooth; }
         --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
         --font-body: var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
-@media (prefers-color-scheme: dark) {.lp {
-          --bg: #101216;
-          --surface: #171a20;
-          --surface-2: #1e2129;
-          --ink: #0c0e11;
-          --ink-2: #171a20;
-          --text: #ece7da;
-          --muted: #aaa494;
-          --faint: #7e7a6e;
-          --line: #2c2f38;
-          --gold: #c6a15f;
-          --gold-strong: #d3b273;
-          --gold-soft: #2a2416;
-          --gold-ink: #d3b273;
-          --hot-bg: #3a1f18;
-          --warm-bg: #382c12;
-          --cold-bg: #1d2a3e;
-          --error-bg: #3a1d1a;
-          --shadow: 0 18px 50px -18px rgba(0, 0, 0, 0.7);
-        }}
 .lp * { box-sizing: border-box; }
 .lp {
         margin: 0;
@@ -304,7 +284,6 @@ html { scroll-behavior: smooth; }
 .lp .btn-gold { background: var(--gold); color: #fff; }
 .lp .btn-gold:hover { background: var(--gold-strong); }
 .lp .btn-ink { background: var(--ink); color: #f5f0e4; }
-@media (prefers-color-scheme: dark) {.lp .btn-ink { background: var(--gold); color: #17130a; }}
 .lp .btn-ghost { background: transparent; color: var(--text); border-color: var(--line); }
 .lp .btn-ghost:hover { border-color: var(--gold); color: var(--gold-strong); }
 .lp .btn-sm { padding: 9px 18px; font-size: 14px; }
@@ -356,7 +335,6 @@ html { scroll-behavior: smooth; }
 @media (max-width: 640px) {.lp .points { grid-template-columns: 1fr; }}
 .lp .points div { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #2c2f38; padding-top: 10px; color: var(--dark-muted); font-size: 14.5px; }
 .lp .points b { color: var(--gold-strong); font-weight: 800; white-space: nowrap; }
-@media (prefers-color-scheme: dark) {.lp .points b, .lp .scoring-band h3 em { color: var(--gold); }}
 /* ---------- Features ---------- */
 .lp .features { background: var(--surface-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .lp .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
