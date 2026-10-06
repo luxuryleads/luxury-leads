@@ -336,7 +336,7 @@ html { scroll-behavior: smooth; }
 .lp .points div { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #2c2f38; padding-top: 10px; color: var(--dark-muted); font-size: 14.5px; }
 .lp .points b { color: var(--gold-strong); font-weight: 800; white-space: nowrap; }
 /* ---------- Features ---------- */
-.lp .features { background: var(--surface-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.lp .features { background: var(--surface-2); border-top: 1px solid var(--line); border-bottom: 1px solid color: var(--ink); var(--line); }
 .lp .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 @media (max-width: 980px) {.lp .feat-grid { grid-template-columns: repeat(2, 1fr); }}
 @media (max-width: 620px) {.lp .feat-grid { grid-template-columns: 1fr; }}
@@ -374,7 +374,7 @@ html { scroll-behavior: smooth; }
 .lp .compare-table tr:last-child { border-bottom: none; }
 .lp .compare-table tbody th { border: none; padding: 0 0 10px; width: 100%; font-family: var(--font-display); font-size: 18px; }
 .lp .compare-table td { border: none; padding: 7px 0; }
-.lp .compare-table td::before { content: attr(data-label); display: block; font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 2px; }
+.lp .compare-table td::before { content: attr(data-label); display: block; font-size: 11.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
 .lp .compare-table td.us { border-radius: 10px; padding: 10px 12px; }}
 /* ---------- Pricing ---------- */
 .lp .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
