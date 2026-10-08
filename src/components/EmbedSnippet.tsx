@@ -7,7 +7,7 @@ import { useState } from 'react';
  * It drops in an iframe pointing at the public widget route.
  * The base URL is always this app's own URL — the agent just copies.
  */
-export function EmbedSnippet({ agentId, baseUrl }: { agentId: string; baseUrl: string }) {
+export function EmbedSnippet({ agentId, baseUrl = 'https://getluxuryleads.com' }: { agentId: string; baseUrl?: string }) {
   const [copied, setCopied] = useState(false);
 
   const snippet = `<!-- Luxury Leads capture widget — paste anywhere on your site -->\n<iframe\n  src="${baseUrl}/widget/${agentId}"\n  width="100%"\n  height="560"\n  style="border:0;border-radius:12px;max-width:420px;"\n  title="Luxury Leads sign-in"\n></iframe>`;
