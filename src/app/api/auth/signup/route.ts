@@ -24,6 +24,9 @@ export async function POST(req: Request) {
       passwordHash: await hashPassword(password),
       brokerage: brokerage || null,
       phone: phone || null,
+      // 14-day cardless free trial starts at signup.
+      plan: 'trial',
+      trialEndsAt: new Date(Date.now() + 14 * 24 * 3600 * 1000),
     },
   });
 
