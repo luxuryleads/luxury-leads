@@ -364,11 +364,6 @@ export default function LandingPage() {
             <table className="compare-table">
               <thead>
                 <tr>
-                  <th scope="col">
-                    <span className="sr-only" style={{ position: 'absolute', left: -9999 }}>
-                      Feature
-                    </span>
-                  </th>
                   <th scope="col" className="us">
                     Luxury Leads<small>From $19/mo</small>
                   </th>
@@ -378,7 +373,6 @@ export default function LandingPage() {
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">QR code open-house sign-in</th>
                   <td className="us" data-label="Luxury Leads">
                     <MarkYes />
                     Yes — per-property QR codes &amp; printable signs
@@ -393,7 +387,6 @@ export default function LandingPage() {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Automatic hot / warm / cold lead scoring</th>
                   <td className="us" data-label="Luxury Leads">
                     <MarkYes />
                     Yes — two-question model, tier on every lead
@@ -415,7 +408,6 @@ export default function LandingPage() {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Built-in multi-step email drip sequences</th>
                   <td className="us" data-label="Luxury Leads">
                     <MarkYes />
                     Yes — a sequence per tier, included in every plan
@@ -437,7 +429,6 @@ export default function LandingPage() {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Embeddable website form widget</th>
                   <td className="us" data-label="Luxury Leads">
                     <MarkYes />
                     Yes — copy-paste snippet for your own site
@@ -452,7 +443,6 @@ export default function LandingPage() {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Works without a separate CRM</th>
                   <td className="us" data-label="Luxury Leads">
                     <MarkYes />
                     Yes — scoring, follow-up, and leads in one place
@@ -469,7 +459,6 @@ export default function LandingPage() {
                   </td>
                 </tr>
                 <tr>
-                  <th scope="row">Starting price</th>
                   <td className="us" data-label="Luxury Leads">
                     <span className="price">$19/mo</span>
                     <span className="note">Every plan, full scoring &amp; follow-up. 14-day free trial.</span>
