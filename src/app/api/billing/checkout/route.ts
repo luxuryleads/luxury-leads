@@ -7,9 +7,11 @@ import { getCurrentAgent } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { getStripe, priceIdFor, appUrl, isTrialActive, PLANS, PlanId } from '@/lib/billing';
 
+
 export async function POST(req: Request) {
   const agent = await getCurrentAgent();
   if (!agent) return NextResponse.json({ error: 'Not signed in.' }, { status: 401 });
+
 
   let plan: string;
   try {
@@ -22,6 +24,7 @@ export async function POST(req: Request) {
   }
   const planId = plan as PlanId;
 
+
   let stripe;
   let priceId: string;
   try {
@@ -33,7 +36,6 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
-
   // Reuse the Stripe customer if we already made one for this agent.
   let customerId = agent.stripeCustomerId;
   if (!customerId) {
@@ -46,6 +48,7 @@ export async function POST(req: Request) {
     await prisma.agent.update({ where: { id: agent.id }, data: { stripeCustomerId: customerId } });
   }
 
+
   const subscriptionData: Record<string, unknown> = {
     metadata: { agentId: agent.id, plan: planId },
   };
@@ -54,9 +57,13 @@ export async function POST(req: Request) {
     subscriptionData.trial_end = Math.floor(agent.trialEndsAt!.getTime() / 1000);
   }
 
+
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
+    // No card required while the trial means nothing is due today; Stripe
+    // still collects a card when payment is actually due (trial expired).
+    payment_method_collection: 'if_required',
     line_items: [{ price: priceId, quantity: 1 }],
     subscription_data: subscriptionData,
     client_reference_id: agent.id,
@@ -64,6 +71,7 @@ export async function POST(req: Request) {
     success_url: `${appUrl()}/dashboard?billing=success`,
     cancel_url: `${appUrl()}/#pricing`,
   });
+
 
   return NextResponse.json({ url: session.url });
 }
