@@ -583,7 +583,8 @@ export default function LandingPage() {
                     Hot / warm / cold scoring
                   </li>
                   <li>
-                    <PlanCheck />1 email drip sequence set
+                    <PlanCheck />
+                    All 21 drip emails — hot, warm &amp; cold
                   </li>
                 </ul>
                 <Link className="btn btn-ghost" href="/signup">
@@ -603,7 +604,7 @@ export default function LandingPage() {
                   </li>
                   <li>
                     <PlanCheck />
-                    Unlimited properties &amp; leads
+                    Unlimited open houses
                   </li>
                   <li>
                     <PlanCheck />
@@ -611,7 +612,7 @@ export default function LandingPage() {
                   </li>
                   <li>
                     <PlanCheck />
-                    All three tiered drip sequences
+                    All 21 drip emails — hot, warm &amp; cold
                   </li>
                   <li>
                     <PlanCheck />
@@ -620,6 +621,10 @@ export default function LandingPage() {
                   <li>
                     <PlanCheck />
                     Printable QR signs
+                  </li>
+                  <li>
+                    <PlanCheck />
+                    Priority email support
                   </li>
                 </ul>
                 <Link className="btn btn-gold" href="/signup">
@@ -644,6 +649,18 @@ export default function LandingPage() {
                   <li>
                     <PlanCheck />
                     Shared team lead lists
+                  </li>
+                  <li>
+                    <PlanCheck />
+                    Team leaderboard
+                  </li>
+                  <li>
+                    <PlanCheck />
+                    Custom email branding
+                  </li>
+                  <li>
+                    <PlanCheck />
+                    Dedicated onboarding
                   </li>
                   <li>
                     <PlanCheck />
