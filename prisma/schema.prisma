@@ -29,6 +29,18 @@ model Agent {
   createdAt    DateTime    @default(now())
   openHouses   OpenHouse[]
   sessions     Session[]
+
+  // ---- Billing (Stripe) ----
+  // plan: 'trial' | 'starter' | 'pro' | 'team' | 'comped' (free partner account)
+  plan               String    @default("trial")
+  // Cardless 14-day free trial: access is granted while trialEndsAt is in the
+  // future and there is no active subscription. Set at signup.
+  trialEndsAt        DateTime?
+  stripeCustomerId     String? @unique
+  stripeSubscriptionId String? @unique
+  // Stripe subscription status: 'active' | 'trialing' | 'past_due' |
+  // 'canceled' | 'incomplete' | ... (see src/lib/billing.ts)
+  subscriptionStatus String?
 }
 
 model Session {
