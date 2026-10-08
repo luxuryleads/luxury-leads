@@ -5,12 +5,12 @@ import { useState } from 'react';
 /**
  * Copy-paste embed snippet agents put on their own websites.
  * It drops in an iframe pointing at the public widget route.
+ * The base URL is always this app's own URL — the agent just copies.
  */
-export function EmbedSnippet({ agentId }: { agentId: string }) {
+export function EmbedSnippet({ agentId, baseUrl }: { agentId: string; baseUrl: string }) {
   const [copied, setCopied] = useState(false);
-  const [origin, setOrigin] = useState('https://YOUR-DOMAIN.com');
 
-  const snippet = `<!-- Luxury Leads capture widget — paste anywhere on your site -->\n<iframe\n  src="${origin}/widget/${agentId}"\n  width="100%"\n  height="560"\n  style="border:0;border-radius:12px;max-width:420px;"\n  title="Luxury Leads sign-in"\n></iframe>`;
+  const snippet = `<!-- Luxury Leads capture widget — paste anywhere on your site -->\n<iframe\n  src="${baseUrl}/widget/${agentId}"\n  width="100%"\n  height="560"\n  style="border:0;border-radius:12px;max-width:420px;"\n  title="Luxury Leads sign-in"\n></iframe>`;
 
   async function copy() {
     try {
@@ -30,23 +30,14 @@ export function EmbedSnippet({ agentId }: { agentId: string }) {
 
   return (
     <div className="embed-snippet">
-      <label className="field-label" htmlFor="embed-domain">
-        Your domain (updates the snippet)
-      </label>
-      <input
-        id="embed-domain"
-        className="input"
-        value={origin}
-        onChange={(e) => setOrigin(e.target.value.replace(/\/$/, ''))}
-        placeholder="https://YOUR-DOMAIN.com"
-      />
       <pre className="code-block">{snippet}</pre>
       <button className="btn btn-secondary" onClick={copy}>
         {copied ? 'Copied!' : 'Copy embed code'}
       </button>
       <p className="hint">
-        The widget shows your most recent open house. Pass <code>?openHouse=QR_SLUG</code> in
-        the iframe URL to pin a specific one.
+        Paste the code above anywhere on your website and the sign-in form appears
+        there. The widget shows your most recent open house. Pass{' '}
+        <code>?openHouse=QR_SLUG</code> in the iframe URL to pin a specific one.
       </p>
     </div>
   );
