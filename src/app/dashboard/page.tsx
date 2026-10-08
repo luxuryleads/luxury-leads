@@ -3,13 +3,85 @@ import Link from 'next/link';
 import { getCurrentAgent } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { TIMELINE_LABELS } from '@/lib/scoring';
+import { hasActiveAccess, trialDaysLeft, planLabel, isSubscriptionActive } from '@/lib/billing';
 import { ScoreBadge } from '@/components/ScoreBadge';
 import { EmbedSnippet } from '@/components/EmbedSnippet';
 import { LogoutButton } from '@/components/LogoutButton';
+import { CheckoutButton, ManageBillingButton } from '@/components/BillingButtons';
+
+function BillingBanner({ agent }: { agent: Parameters<typeof hasActiveAccess>[0] & { stripeCustomerId: string | null } }) {
+  // Still on the cardless trial (no Stripe subscription yet).
+  if (agent.plan === 'trial' && !isSubscriptionActive(agent.subscriptionStatus)) {
+    const days = trialDaysLeft(agent);
+    return (
+      <div className="card" style={{ borderLeft: '4px solid var(--gold)', marginBottom: 24 }}>
+        <h3 style={{ marginTop: 0, color: 'var(--navy)' }}>
+          {days > 0 ? `${days} day${days === 1 ? '' : 's'} left in your free trial` : 'Your free trial has ended'}
+        </h3>
+        <p className="hint">Pick a plan to keep capturing and following up with leads — cancel anytime.</p>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <CheckoutButton plan="starter" label="Starter — $19/mo" className="btn btn-secondary" />
+          <CheckoutButton plan="pro" label="Pro — $39/mo" />
+          <CheckoutButton plan="team" label="Team — $99/mo" className="btn btn-secondary" />
+        </div>
+      </div>
+    );
+  }
+  // Paying (or partner) — show plan + portal link.
+  return (
+    <div className="card" style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+      <div style={{ flex: 1, minWidth: 200 }}>
+        <strong style={{ color: 'var(--navy)' }}>You&apos;re on {planLabel(agent)}</strong>
+        <p className="hint" style={{ margin: '4px 0 0' }}>Update your card, switch plans, or cancel anytime.</p>
+      </div>
+      {agent.stripeCustomerId && <ManageBillingButton />}
+    </div>
+  );
+}
+
+function TrialExpiredPaywall() {
+  return (
+    <div className="container" style={{ maxWidth: 720, paddingTop: 48, paddingBottom: 48 }}>
+      <div className="card" style={{ textAlign: 'center', padding: 40 }}>
+        <h1 style={{ color: 'var(--navy)' }}>Your free trial has ended</h1>
+        <p>
+          Your 14 days are up — pick a plan to keep your lead lists, QR codes, and
+          follow-up emails running. Your data is safe and waiting.
+        </p>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 16 }}>
+          <CheckoutButton plan="starter" label="Starter — $19/mo" className="btn btn-secondary" />
+          <CheckoutButton plan="pro" label="Pro — $39/mo" />
+          <CheckoutButton plan="team" label="Team — $99/mo" className="btn btn-secondary" />
+        </div>
+        <p className="hint" style={{ marginTop: 16 }}>Month-to-month. Cancel anytime.</p>
+      </div>
+    </div>
+  );
+}
 
 export default async function DashboardPage() {
   const agent = await getCurrentAgent();
   if (!agent) redirect('/login');
+
+  // Billing gate: trial expired and no active subscription -> paywall.
+  if (!hasActiveAccess(agent)) {
+    return (
+      <>
+        <nav className="nav">
+          <div className="nav-inner">
+            <Link href="/dashboard" className="brand">
+              Luxury<span>Leads</span>
+            </Link>
+            <div className="nav-links">
+              <span style={{ color: '#dbe3f0', fontSize: 14 }}>{agent.name}</span>
+              <LogoutButton />
+            </div>
+          </div>
+        </nav>
+        <TrialExpiredPaywall />
+      </>
+    );
+  }
 
   const openHouses = await prisma.openHouse.findMany({
     where: { agentId: agent.id },
@@ -46,6 +118,8 @@ export default async function DashboardPage() {
       </nav>
 
       <div className="container">
+        <BillingBanner agent={agent} />
+
         <div className="dash-head">
           <h1>Dashboard</h1>
           <Link href="/dashboard/open-houses/new" className="btn btn-primary">
