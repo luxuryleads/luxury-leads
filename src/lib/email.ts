@@ -56,10 +56,10 @@ export interface SendResult {
 export async function sendEmail(opts: {
   to: string;
   subject: string;
-  text: string;
+  text: string; fromName?: string; replyTo?: string;
 }): Promise<SendResult> {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM_EMAIL;
+  const fromAddr = process.env.RESEND_FROM_EMAIL; const from = opts.fromName && fromAddr ? `${opts.fromName} <${fromAddr}>` : fromAddr; // Show the agent's name on the from line; replies go to the agent's inbox.
 
   // ── STUB: no key, no send. Safe to run locally and in CI. ──────────────────
   if (!apiKey || !from) {
@@ -81,7 +81,7 @@ export async function sendEmail(opts: {
       to: opts.to,
       subject: opts.subject,
       html: textToHtml(opts.text),
-      text: opts.text,
+      text: opts.text, ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
     }),
   });
 
