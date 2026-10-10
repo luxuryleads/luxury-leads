@@ -70,7 +70,7 @@ export async function processDueSequences(leadIds?: string[]): Promise<ProcessRe
       ].join('\n');
       const text = renderEmail(seq.body, tags) + footer;
 
-      const send = await sendEmail({ to: lead.email!, subject, text });
+      const send = await sendEmail({ to: lead.email!, subject, text, fromName: tags.agent_name, replyTo: tags.agent_email });
 
       if (send.skipped) {
         result.skipped++;
