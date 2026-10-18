@@ -37,12 +37,9 @@ export function CheckoutButton({
         className={className}
         disabled={busy}
         onClick={() => {
-          // Rewardful affiliate referral, if the visitor arrived via a partner link.
-          const referral =
-            typeof window !== 'undefined' ? window.Rewardful?.referral : undefined;
           postAndRedirect(
             '/api/billing/checkout',
-            { plan, ...(referral ? { referral } : {}) },
+            { plan },
             setError,
             setBusy
           );
