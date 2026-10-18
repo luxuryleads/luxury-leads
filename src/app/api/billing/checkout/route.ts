@@ -14,9 +14,8 @@ export async function POST(req: Request) {
 
 
   let plan: string;
-  let referral: string | undefined;
   try {
-    ({ plan, referral } = await req.json());
+    ({ plan } = await req.json());
   } catch {
     return NextResponse.json({ error: 'Invalid request.' }, { status: 400 });
   }
@@ -67,10 +66,7 @@ export async function POST(req: Request) {
     payment_method_collection: 'if_required',
     line_items: [{ price: priceId, quantity: 1 }],
     subscription_data: subscriptionData,
-    // Rewardful affiliate referral when present (their Stripe integration
-    // matches on this); falls back to the agent id otherwise. The webhook
-    // reads the agent from metadata, so this is safe to repurpose.
-    client_reference_id: referral || agent.id,
+    client_reference_id: agent.id,
     metadata: { agentId: agent.id, plan: planId },
     success_url: `${appUrl()}/dashboard?billing=success`,
     cancel_url: `${appUrl()}/#pricing`,
